@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="service_book_report" name="Service Book Report">
+            <t t-call="web.internal_layout">
+                <div class="page" >
+                    <div class="header">
+                        <div class="text-center" style="font-size:35px;">
+                            <span><strong>Malabar Auto Clinic</strong><br/></span> 
+                            <span><strong>Gandhidaspadi,opp:vpc.mall</strong><br/></span>
+                            <span><strong>Estimate Bill</strong><br/></span>
+                        </div>    
+                    </div> 
+                    <br/>
+   
+                   <div class="row mt16 mb16" id="informations">
+                        <div t-if="doc.name" class="col-auto col-4 mw-100 mb-2">
+                            <strong>Service No:</strong>
+                            <p class="m-0" t-field="doc.name"/>
+                        </div>
+                        <div t-if="doc.date" class="col-auto col-4 mw-100 mb-2">
+                            <strong>Creation Date:</strong>
+                            <p class="m-0" t-field="doc.date"/>
+                        </div>
+                        <div t-if="doc.date_deadline" class="col-auto col-4 mw-100 mb-2">
+                            <strong>Dead Line Date:</strong>
+                            <p class="m-0" t-field="doc.date_deadline"/>
+                        </div>
+                    </div> 
+
+                    <div class="row mt16 mb16" id="informations">
+                        <div class="col-6">
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr t-if="doc.customer_id.name">
+                                        <td><strong>Customer:</strong></td>
+                                        <td><p class="m-0" t-field="doc.customer_id.name"/></td>
+                                    </tr>
+                                    <tr t-if="doc.phone_num1">
+                                        <td><strong>Phone No:</strong></td>
+                                        <td><p class="m-0" t-field="doc.phone_num1"/></td>
+                                    </tr>
+                                    <tr t-if="doc.phone_num2 or doc.email_cust">
+                                        <td><strong>Mobile/Email:</strong></td>
+                                        <td>
+                                            <p class="m-0">
+                                                <span t-if="doc.phone_num2" t-field="doc.phone_num2"/>
+                                                <span t-if="doc.phone_num2 and doc.email_cust"> / </span>
+                                                <span t-if="doc.email_cust" t-field="doc.email_cust"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="doc.cust_address">
+                                        <td><strong>Address:</strong></td>
+                                        <td><p class="m-0" t-field="doc.cust_address"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div><br/>
+                        <div class="col-6">
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr t-if="doc.vehicle_name">
+                                        <td><strong>Name:</strong></td>
+                                        <td><p class="m-0" t-field="doc.vehicle_name"/></td>
+                                    </tr>
+                                    <tr t-if="doc.registration_no">
+                                        <td><strong>Reg No:</strong></td>
+                                        <td><p class="m-0" t-field="doc.registration_no"/></td>
+                                    </tr>
+                                    <tr t-if="doc.vechile_odometer">
+                                        <td><strong>Odometer:</strong></td>
+                                        <td><p class="m-0" t-field="doc.vechile_odometer"/></td>
+                                    </tr>
+                                    <tr t-if="doc.company_id.name or doc.vehicle_type">
+                                        <td><strong>Company/Type:</strong></td>
+                                        <td>
+                                            <p class="m-0">
+                                                <span t-if="doc.c_company" t-field="doc.c_company"/>
+                                                <span t-if="doc.c_company and doc.vehicle_type"> / </span>
+                                                <span t-if="doc.vehicle_type" t-field="doc.vehicle_type"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><br/>
+
+                    
+                   <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr> 
+                                    <th>Job</th>
+                                    <th>Description</th> 
+                                    <th>Labour</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.line_ids" t-as="line">
+                                    <td><span t-esc="line.job_id.name"/></td>
+                                    <td><span t-esc="line.description"/></td>
+                                    <td><span t-esc="line.amount"/></td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><strong>Total Labour:</strong></td>
+                                    <td><span t-if="doc.line_total" t-field="doc.line_total"/></td>
+                                </tr>
+                            </tbody> 
+                        </table><br/><br/>
+                                             
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr> 
+                                    <th>Parts</th>
+                                    <th>QTY</th>
+                                    <th>Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.parts_line_ids" t-as="line2">
+                                    <td><span t-esc="line2.carparts_id.name"/></td>
+                                    <td><span t-esc="line2.quantity"/></td>
+                                    <td><span t-esc="line2.price"/></td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><strong>Total Parts:</strong></td>
+                                    <td><span t-if="doc.parts_total" t-field="doc.parts_total"/></td>
+                                </tr>
+                            </tbody> 
+                        </table>
+                    </div>
+
+                    <div t-if="doc.grand_total" class="col-auto col-3 mw-100 mb-2" style="text-align:center;">
+                        <strong style="display: inline-block;">Grand Total:</strong>
+                        <p class="m-0" style="display: inline-block; margin-left: 5px;"> <span t-field="doc.grand_total"/>  ₹</p>
+                    </div>
+
+                    <div class="text-center">
+                    <p colspan="7">Total Payment in Words: <strong><span t-esc="doc.amount_to_words()"/></strong></p>
+                    </div>
+
+                </div>
+            </t> 
+        </template>
+        
+        <template id="service_book_garage_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="d_auto_garage.service_book_report" />
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

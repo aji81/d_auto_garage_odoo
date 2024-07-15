@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record id="job_type_tree_view" model="ir.ui.view">
+	        <field name="name">job.type.tree</field>
+	        <field name="model">job.type</field>
+	        <field name="arch" type='xml'>
+	            <tree>
+	            	<field name="name"/>
+                    <field name="amount"/>
+	            </tree>
+	        </field>
+    	</record>
+        
+        <record id="action_job_type" model="ir.actions.act_window">
+            <field name="name">Job Type</field>
+            <field name="res_model">job.type</field>
+            <field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+              		JOB TYpe   	
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="job_type_menu_id"
+            name="Job Type"
+            parent="d_auto_garage.malabar_main_page"
+            sequence = "2"/>
+
+        <menuitem 
+            id="d_auto_garage_action_job_type" 
+            action="action_job_type" 
+            name="Job Type" 
+            parent="job_type_menu_id" 
+            sequence="1"/>
+            
+    </data>
+</odoo>

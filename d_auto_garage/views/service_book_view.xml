@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="service_book_form_view" model="ir.ui.view">
+    	<field name="name">service.book.form</field>
+        <field name="model">service.book</field>
+        <field name="arch" type='xml'>
+       		<form>
+       			<header>
+					<button name="set_to_confirm" string='Confirm' type="object" states="new" class="btn-primary"/>
+					<button name="set_to_done" string='Done' type="object" states="confirm" class="btn-primary" />
+					<button name="generate_invoice_report" string="Generate Invoice Report" type="object" states="confirm,done"/>
+				<!--	<button name="send_invoice_report_whatsapp" string="Send Invoice Report via WhatsApp" type="object"/> -->
+					<button name="set_to_new" string='New' type="object" states="cancel" class="btn-primary"/>
+					<button name="set_to_cancel" string='Cancel' type="object" states="new,confirm,done"/>
+					<field name ="state" 
+						   widget="statusbar" 
+						   statusbar_visible="new,confirm,done,cancel"/> 
+       			</header>
+                <sheet>
+                	<div class="oe_title">
+                	<!--	<div class="oe_button_box" name="button_box" >
+	                	<button name="open_purchase_orders" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible':[('purchase_count','=',0)]}">
+	                   		<field string="Purchase Orders" name ="purchase_count" widget="statinfo"/>
+	                   	</button>
+	                   	<button type="object" name="action_view_transfer" class="oe_stat_button" icon="fa-list"
+               				 attrs="{'invisible': [('transfer_count', '=', 0)]}">
+                			<field name="transfer_count" widget="statinfo" string="Transfer"/>
+            			</button>
+	                   	</div> -->
+					<h1>
+					    <field name="name" readonly="1"/>
+					</h1>
+              		</div>
+                	<group>
+                		<group>
+						<separator string="Customer Detials"/>
+							<field name="customer_id"/>
+							<field name="phone_num1"/>
+							<field name="phone_num2"/>
+							<field name="email_cust"/>
+							<field name="cust_address"/>
+						<separator string="Vehicle Detials"/>
+							<field name="vehicle_name"/>
+							<field name="registration_no"/>
+							<field name="vechile_odometer"/>
+							<field name="c_company"/>
+							<field name="vehicle_type"/>
+							<field name="model_numb"/>
+							<field name="vehicle_colour"/>   	   	   
+	                	</group>
+	                	<group>
+							<separator string="Date"/>
+							<field name="date"
+								   string="Booking Date"/>
+	                		<field name="date_deadline"/>
+	                	</group>
+                	</group>
+                	<notebook>
+						<page string="Service Detials">
+							<field name="line_ids" 
+								   attrs="{'readonly': [('state', 'not in', ['new'])]}"> 
+								<tree editable ="bottom">
+									<field name="job_id"  width="2"/>
+									<field name="description"/>
+									<field name="amount"/>
+								</tree>
+							</field>
+							<group class="oe_subtotal_footer oe_right" name="job_total">
+                				<field name="line_total" class="oe_subtotal_footer_separator"/>
+            				</group>
+						<!--	<field name="line_total" 
+								   widget="monetary" 
+								   sum="Total"/> -->
+							<separator/>
+							<field name="parts_line_ids" 
+								   attrs="{'readonly': [('state', 'not in', ['new'])]}">
+								<tree editable ="bottom">
+									<field name="carparts_id" 
+										   width="20%"/>
+									<field name="quantity"/>
+									<field name ="price"/>
+									<field name ="sub_total"/>
+								</tree>
+							</field>
+							<group class="oe_subtotal_footer oe_right" name="part_line_total">
+                				<field name="parts_total" class="oe_subtotal_footer_separator"/>
+            				</group>
+						<!--	<field name="parts_total" 
+								   widget="monetary"
+								   sum="Total"/> -->
+							<separator/>
+							<separator/>
+							<separator/>
+							<group class="oe_subtotal_footer oe_right" name="grand_totall">
+                				<field name="grand_total" class="oe_subtotal_footer_separator"/>
+            				</group>
+						<!--	<field name="grand_total" 
+								   widget="monetary"
+								   sum="Total"/> -->
+						</page> 
+						<page string="Vehicle Image">
+							<field name="vechile_image"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image1"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image2"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image3"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image4"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image5"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image6"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image7"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>
+							<field name="vechile_image8"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>	   	   
+							<field name="vechile_image9"
+								   widget="image" 
+								   options="{'width': 10, 'height': 10}"/>	   	   
+						</page>
+					</notebook>  
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_book_tree_view" model="ir.ui.view">
+        <field name="name">service.book.tree</field>
+        <field name="model">service.book</field>
+        <field name="arch" type='xml'>
+            <tree default_order="id desc">
+            	<field name="name"/>
+            	<field name="registration_no"/>
+               	<field name="date"/>
+               	<field name="date_deadline"
+					   string="Booking Date"/>
+               	<field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="seq_service_book" model="ir.sequence">
+		<field name="name">Service Book</field>
+		<field name="code">service.book</field>
+		<field name="prefix">SVC</field>
+		<field name="padding">5</field>
+		<field name="company_id" eval="False"/>
+    </record> 
+      
+ <!--    <record id="purchase_indent_draft_action" model="ir.actions.act_window">
+	    <field name="name">Draft Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('state','=','draft')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_waiting_action" model="ir.actions.act_window">
+	    <field name="name">Waiting Verification Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('state','=','waiting_verification')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_verified_action" model="ir.actions.act_window">
+	    <field name="name">Waiting Approval Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('state','=','waiting_for_approval')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_approved_action" model="ir.actions.act_window">
+	    <field name="name">Approved Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('state','=','approved')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_local_purchase_action" model="ir.actions.act_window">
+	    <field name="name">Local Purchase</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('indent_type','=','local')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_branch_purchase_action" model="ir.actions.act_window">
+	    <field name="name">Branch Transfer</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('indent_type','=','branch')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_all_action" model="ir.actions.act_window">
+	    <field name="name">Purchase Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="view_mode">tree,form</field>
+  	</record>
+  	
+  	<record id="purchase_indent_check_action" model="ir.actions.act_window">
+	    <field name="name">Send For Check Indents</field>
+	    <field name="res_model">purchase.indent</field>
+	    <field name="domain">[('state','=','send_for_check')]</field>
+	    <field name="view_mode">tree,form</field>
+  	</record> -->
+  	
+  	<record id="action_service_book" model="ir.actions.act_window">
+    	<field name="name">Book a Service</field>
+        <field name="res_model">service.book</field>
+	    <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+  			<p class="o_view_nocontent_smiling_face">
+                 Service Book 
+          	</p>
+        </field>
+    </record>
+  	
+  <!--   <menuitem id="purchase_indent_menu_id"
+   	name="Purchase Indent"
+   	parent="purchase.menu_purchase_root"
+   	sequence = "0"/>
+   	
+   	<menuitem id="purchase_indent_all_id"
+   	name="Purchase Indents"
+   	parent="purchase_indent_menu_id"
+   	sequence = "1"
+   	action = "purchase_indent_all_action"/>
+   	
+   	<menuitem id="purchase_indent_draft_menu_id"
+   	name="Draft"
+   	parent="purchase_indent_menu_id"
+   	sequence = "2"
+   	action = "purchase_indent_draft_action"/>
+   	
+   	<menuitem id="purchase_indent_check_menu_id"
+   	name="Waiting for Checking"
+   	parent="purchase_indent_menu_id"
+   	sequence = "3"
+   	action = "purchase_indent_check_action"/>
+   	
+   	<menuitem id="purchase_indent_waiting_menu_id"
+   	name="Waiting Verification"
+   	parent="purchase_indent_menu_id"
+   	sequence = "4"
+   	action = "purchase_indent_waiting_action"/>
+   	
+   	<menuitem id="purchase_indent_verified_menu_id"
+   	name="Waiting Approval"
+   	parent="purchase_indent_menu_id"
+   	sequence = "5"
+   	action = "purchase_indent_verified_action"/>
+   	
+   	<menuitem id="purchase_indent_approved_menu_id"
+   	name="Approved"
+   	parent="purchase_indent_menu_id"
+   	sequence = "6"
+   	action = "purchase_indent_approved_action"/>
+   	
+   	<menuitem id="purchase_indent_local_purchase_menu_id"
+   	name="Local Purchase"
+   	parent="purchase_indent_menu_id"
+   	sequence = "7"
+   	action = "purchase_indent_local_purchase_action"/>
+   	
+   	<menuitem id="purchase_indent_branch_purchase_menu_id"
+   	name="Branch Transfer"
+   	parent="purchase_indent_menu_id"
+   	sequence = "8"
+   	action = "purchase_indent_branch_purchase_action"/> -->
+   	
+   	<!-- Car Parts menu item view -->        
+	<menuitem id="malabar_main_page"
+  	name = "Malabar Auto Garage"/>
+        		  
+    <menuitem id="book_services"
+	parent = "malabar_main_page"
+	action = 'action_service_book'
+	sequence="1"/>
+        	
+</odoo>

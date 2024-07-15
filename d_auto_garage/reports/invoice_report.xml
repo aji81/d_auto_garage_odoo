@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="invoice_report" name="Invoice Report">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <!--<div class="text-center" style="font-size:35px;">
+                        <span><strong>Malabar Auto Garage</strong><br/></span> 
+                        <span><strong>Invoice</strong><br/></span>
+                    </div> -->
+                    <div class="header">
+                        <div class="text-center" style="font-size:35px;">
+                            <span><strong>Malabar Auto Clinic</strong><br/></span> 
+                            <span><strong>Gandhidaspadi,opp:vpc.mall</strong><br/></span>
+                            <span><strong>Invoice</strong><br/></span>
+                        </div>    
+                    </div> 
+                    <br/>
+   
+                    <div class="row mt16 mb16" id="informations">
+                        <div class="col-auto col-4 mw-100 mb-2">
+                            <strong>Invoice Number:</strong>
+                            <p class="m-0" t-field="doc.name"/>
+                        </div>
+                        <div class="col-auto col-4 mw-100 mb-2">
+                            <strong>Invoice Date:</strong>
+                            <p class="m-0" t-field="doc.date"/>
+                        </div>
+                        <div class="col-auto col-4 mw-100 mb-2">
+                            <strong>Due Date:</strong>
+                            <p class="m-0" t-field="doc.date_deadline"/>
+                        </div>
+                    </div> 
+
+                    <div class="row mt16 mb16" id="informations">
+                        <div class="col-6">
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Customer:</strong></td>
+                                        <td><p class="m-0" t-field="doc.customer_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phone No:</strong></td>
+                                        <td><p class="m-0" t-field="doc.phone_num1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email:</strong></td>
+                                        <td><p class="m-0" t-field="doc.email_cust"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Address:</strong></td>
+                                        <td><p class="m-0" t-field="doc.cust_address"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Vehicle:</strong></td>
+                                        <td><p class="m-0" t-field="doc.vehicle_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Registration No:</strong></td>
+                                        <td><p class="m-0" t-field="doc.registration_no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Odometer:</strong></td>
+                                        <td><p class="m-0" t-field="doc.vechile_odometer"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Company/Type:</strong></td>
+                                        <td><p class="m-0" t-field="doc.vehicle_type"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><br/>
+
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr> 
+                                    <th>Sl No</th>
+                                    <th>Item</th>
+                                    <th>Description</th> 
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="Sl_No" t-value="1"/>
+                                <tr t-foreach="doc.line_ids" t-as="line">
+                                    <td><span t-esc="Sl_No" />
+		                                <t t-set="Sl_No" t-value="Sl_No+1" /></td>    
+                                    <td><span t-esc="line.job_id.name"/></td>
+                                    <td><span t-esc="line.description"/></td>
+                                    <td><span t-esc="line.amount"/></td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><strong>Total Labour:</strong></td>
+                                    <td><span t-field="doc.line_total"/></td>
+                                </tr>
+                            </tbody> 
+                        </table><br/>
+                                             
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Sl No</th> 
+                                    <th>Part</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="Sl_No" t-value="1"/>
+                                <tr t-foreach="doc.parts_line_ids" t-as="line2">
+                                    <td><span t-esc="Sl_No" />
+		                                <t t-set="Sl_No" t-value="Sl_No+1" /></td> 
+                                    <td><span t-esc="line2.carparts_id.name"/></td>
+                                    <td><span t-esc="line2.quantity"/></td>
+                                    <td><span t-esc="line2.price"/></td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><strong>Total Parts:</strong></td>
+                                    <td><span t-field="doc.parts_total"/></td>
+                                </tr>
+                            </tbody> 
+                        </table>
+                    </div>
+
+                    <div class="col-auto col-3 mw-100 mb-2" style="text-align:center;">
+                        <strong style="display: inline-block;">Grand Total:</strong>
+                        <p class="m-0" style="display: inline-block; margin-left: 5px;"> <span t-field="doc.grand_total"/>  ₹</p>
+                    </div>
+
+                    <div class="text-center">
+                        <p>Total Amount in Words: <strong><span t-esc="doc.amount_to_words()"/></strong></p>
+                    </div><br/><br/><br/>
+
+                    <div style="text-align: center; margin-left: 65%;">
+                        <p colspan="7">Seal: <strong></strong></p>
+                    </div>
+                </div>
+            </t> 
+        </template>
+        
+        <template id="invoice_garage_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="d_auto_garage.invoice_report" />
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record id="car_parts_tree_view" model="ir.ui.view">
+	        <field name="name">car.parts.tree</field>
+	        <field name="model">car.parts</field>
+	        <field name="arch" type='xml'>
+	            <tree>
+	            	<field name="name"/>
+                    <field name="price"/>
+	            </tree>
+	        </field>
+    	</record>
+      
+        <record id="action_car_parts" model="ir.actions.act_window">
+            <field name="name">Car Parts</field>
+            <field name="res_model">car.parts</field>
+            <field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+              		Car Parts  	
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="car_parts_menu_id"
+            name="Car Parts"
+            parent="d_auto_garage.malabar_main_page"
+            sequence = "2"/>
+
+        <menuitem 
+            id="d_auto_garage_action_car_parts" 
+            action="action_car_parts" 
+            name="Job Type" 
+            parent="car_parts_menu_id" 
+            sequence="1"/>
+            
+    </data>
+</odoo>
